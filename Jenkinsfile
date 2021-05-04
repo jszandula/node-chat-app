@@ -1,16 +1,13 @@
 pipeline {
 	agent any
+	
+	tools {nodejs "node" }
 
 	stages{
-		stage('Build'){
-			steps{
-				echo 'Building...'
-				sh 'npm install'
-			}
-		}
 		stage('Test'){
 			steps{
 				echo 'Testing...'
+				sh 'npm install'
 				sh 'npm run test'
 			}
 		}
@@ -25,7 +22,6 @@ pipeline {
 		success{
 			emailext attachLog: true,
                 		body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-                		recipientProviders: [developers(), requestor()],
                 		to: 'fanofgrin@gmail.com',
                 		subject: "Jenkins build succeed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
 		}		
