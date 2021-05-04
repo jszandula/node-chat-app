@@ -12,6 +12,7 @@ pipeline {
 			steps{
 				echo 'Testing...'
 				sh 'npm run test'
+			}
 		}
 	}
 	post{
