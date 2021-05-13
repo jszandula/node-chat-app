@@ -44,25 +44,6 @@ pipeline {
 				}
 			}
 		}
-		stage('Deploy'){
-			steps{
-				echo 'Deploying...'
-			}
-			post{
-				failure{
-					emailext attachLog: true,
-						body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-						to: 'fanofgrin@gmail.com',
-						subject: "Jenkins deploy-stage failed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-				}
-				success{
-					emailext attachLog: true,
-						body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
-						to: 'fanofgrin@gmail.com',
-						subject: "Jenkins deploy-stage succeed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-				}
-			}
-		}
 	}
 	post{
 		failure{
