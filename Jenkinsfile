@@ -17,7 +17,7 @@ pipeline {
 			}
 		}
 		stage('Deploy'){
-			echo 'Deploying'
+			echo 'Deploying...'
 		}
 	}
 	post{
