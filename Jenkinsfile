@@ -9,16 +9,52 @@ pipeline {
 				echo 'Building...'
 				sh 'npm install'
 			}
+			failure{
+				emailext attachLog: true,
+					body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+		        		to: 'fanofgrin@gmail.com',
+		        		subject: "Jenkins build-stage failed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+			}
+			success{
+				emailext attachLog: true,
+		        		body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+		        		to: 'fanofgrin@gmail.com',
+		        		subject: "Jenkins build-stage succeed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+			}	
 		}
 		stage('Test'){
 			steps{
 				echo 'Testing...'
 				sh 'npm run test'
 			}
+			failure{
+				emailext attachLog: true,
+					body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+		        		to: 'fanofgrin@gmail.com',
+		        		subject: "Jenkins test-stage failed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+			}
+			success{
+				emailext attachLog: true,
+		        		body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+		        		to: 'fanofgrin@gmail.com',
+		        		subject: "Jenkins test-stage succeed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+			}
 		}
 		stage('Deploy'){
 			steps{
 				echo 'Deploying...'
+			}
+			failure{
+				emailext attachLog: true,
+					body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+		        		to: 'fanofgrin@gmail.com',
+		        		subject: "Jenkins deploy-stage failed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+			}
+			success{
+				emailext attachLog: true,
+		        		body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}",
+		        		to: 'fanofgrin@gmail.com',
+		        		subject: "Jenkins deploy-stage succeed ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
 			}
 		}
 	}
